@@ -4,6 +4,8 @@ import json
 import io
 import os
 
+from pydantic import BaseModel
+
 from src.server.models.user import User
 from src.server.models.task import Task
 
@@ -18,34 +20,17 @@ USERS: List[User] = []
 TASKS: List[Task] = []
 
 
-def load_users() -> List[User]:
-    print('cargando usuarios...')
-    lista_usuarios: List[User] = []
-    with io.open(USERS_PATH, 'r', encoding='utf-8') as jsonfile:
+def load(nombre: str, ruta: str, coleccion: List, clase) -> None:
+    print(f'-- cargando {nombre} ...')
+    with io.open(ruta, 'r', encoding='utf-8') as jsonfile:
         content = json.load(jsonfile)
-
-        for item in content:
-            user = User(**item)
-            lista_usuarios.append(user)
-    return lista_usuarios
-
-
-def load_task() -> List[Task]:
-    print('Cargando task...')
-    lista_task: List[Task] = []
-    with io.open(TASKS_PATH, 'r', encoding='utf-8') as jsonfile:
-        content = json.load(jsonfile)
-
-        for item in content:
-            task = Task(**item)
-            lista_task.append(task)
-    return lista_task
+        [coleccion.append(clase(**item))for item in content]
 
 
 print(f'Usuarios antes de cargar: {len(USERS)}')
-USERS = load_users()
+load('usuario', USERS_PATH, USERS,User)
 print(f'Usuarios cargados: {len(USERS)}')
 
 print(f'task antes de cargar {len(TASKS)}')
-TASKS = load_task()
+load('Tareas ', TASKS_PATH, TASKS,Task)
 print(f'Task cargardos: {len(TASKS)}')
