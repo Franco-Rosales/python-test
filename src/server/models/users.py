@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 from src.server.models.address import Address
 from src.server.models.company import Company
 
@@ -14,3 +13,6 @@ class User(BaseModel):
     phone: str
     website: str
     company: Company
+
+    def __repr__(self):
+        return f'{self.id},{self.name} '
