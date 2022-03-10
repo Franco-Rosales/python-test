@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter
 from starlette import status
 
-from src.server.models.users import User
+from src.server.models.user import User
 from src.server.persistence.database import USERS
 
 router = APIRouter()
