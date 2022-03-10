@@ -1,14 +1,11 @@
 from typing import List
-
-from fastapi import APIRouter
-from starlette import status
-
+from fastapi import APIRouter, status
 from src.server.models.user import User
-from src.server.persistence.database import USERS
+from src.server.repositories.users import Repository
 
 router = APIRouter()
 
 
 @router.get('/users', response_model=List[User], status_code=status.HTTP_200_OK)
 def get_users():
-    return USERS
+    return Repository.get_users()

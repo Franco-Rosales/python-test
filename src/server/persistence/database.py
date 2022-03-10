@@ -16,8 +16,10 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 USERS_PATH: str = "../../extra/data/users.json"
 TASKS_PATH: str = "../../extra/data/task.json"
 
-USERS: List[User] = []
-TASKS: List[Task] = []
+
+class Database:
+    Users: List[User] = []
+    Tasks: List[Task] = []
 
 
 def load(nombre: str, ruta: str, coleccion: List, clase) -> None:
@@ -27,10 +29,10 @@ def load(nombre: str, ruta: str, coleccion: List, clase) -> None:
         [coleccion.append(clase(**item))for item in content]
 
 
-print(f'Usuarios antes de cargar: {len(USERS)}')
-load('usuario', USERS_PATH, USERS,User)
-print(f'Usuarios cargados: {len(USERS)}')
+print(f'Usuarios antes de cargar: {len(Database.Users)}')
+load('usuario', USERS_PATH, Database.Users, User)
+print(f'Usuarios cargados: {len(Database.Users)}')
 
-print(f'task antes de cargar {len(TASKS)}')
-load('Tareas ', TASKS_PATH, TASKS,Task)
-print(f'Task cargardos: {len(TASKS)}')
+print(f'task antes de cargar {len(Database.Tasks)}')
+load('Tareas ', TASKS_PATH, Database.Tasks, Task)
+print(f'Task cargardos: {len(Database.Tasks)}')

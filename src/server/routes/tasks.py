@@ -1,9 +1,11 @@
+from typing import List
 from fastapi import APIRouter, status
-from src.server.persistence.database import TASKS
+from src.server.models.task import Task
+from src.server.repositories.tasks import Repository
 
-tasks_router = APIRouter()
+router = APIRouter()
 
 
-@tasks_router.get("/tasks", status_code=status.HTTP_200_OK)
+@router.get('/tasks', response_model=List[Task], status_code=status.HTTP_200_OK)
 def get_tasks():
-    return TASKS
+    return Repository.get_tasks()
